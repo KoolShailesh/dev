@@ -197,8 +197,5 @@ public class TournamentService {
 		return true;
 	}
 
-	public static void main(String[] args) {
 
-		// new TournamentService().getTeamsSchedule(new ArrayList<>(teams));
-	}
 }

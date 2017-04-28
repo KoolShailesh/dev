@@ -27,11 +27,7 @@ public class Application extends SpringBootServletInitializer {
 
 			System.out.println("I am in CommandLineRunners:");
 
-			String[] beanNames = ctx.getBeanDefinitionNames();
-			Arrays.sort(beanNames);
-			for (String beanName : beanNames) {
-				System.out.println(beanName);
-			}
+		
 
 		};
 	}

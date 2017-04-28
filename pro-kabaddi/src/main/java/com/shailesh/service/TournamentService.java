@@ -44,6 +44,8 @@ public class TournamentService {
 		System.out.println("totalTeams : " + totalTeams);
 
 		List<Pair<TeamVO>> teamPairs = new ArrayList<>();
+		
+		System.err.println();
 
 		// creating team pairs for two teams
 		teams.stream().forEach(team1 -> teams.stream().forEach(team2 -> teamPairs.add(new Pair<TeamVO>(team1, team2))));

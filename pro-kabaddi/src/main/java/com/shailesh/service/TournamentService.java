@@ -37,7 +37,7 @@ public class TournamentService {
 	}
 
 	public List<ScheduleVO> getTeamsSchedule() {
-
+		Thread t1 ;
 		List<TeamVO> teams = new ArrayList<>(localCache.get("allteams"));
 		int totalTeams = teams.size();
 
@@ -45,7 +45,8 @@ public class TournamentService {
 
 		List<Pair<TeamVO>> teamPairs = new ArrayList<>();
 		
-		
+	 t1  =new Thread();
+	 t1.start();
 
 		// creating team pairs for two teams
 		teams.stream().forEach(team1 -> teams.stream().forEach(team2 -> teamPairs.add(new Pair<TeamVO>(team1, team2))));

@@ -2,7 +2,6 @@ package com.shailesh.viewobjects;
 
 import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.shailesh.util.Pair;
 
 /**
@@ -59,7 +58,7 @@ public class ScheduleVO implements Serializable {
 		this.playDay = playDay;
 	}
 
-	@JsonIgnore
+//	@JsonIgnore
 	public boolean isEmpty() {
 
 		return playingTeams == null;

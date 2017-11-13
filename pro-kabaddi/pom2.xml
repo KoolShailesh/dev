@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-<!-- https://www.midgetontoes.com/2015/06/26/tips-for-using-proguard-with-spring-framework/ -->
+
 	<groupId>com.shailesh</groupId>
 	<artifactId>pro-kabaddi</artifactId>
 	<version>1.0.0</version>
@@ -16,7 +16,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.8.RELEASE</version>
+		<version>1.5.4.RELEASE</version>
 	</parent>
 
 	<dependencies>
@@ -42,35 +42,23 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- end::tests[] -->
-		<dependency>
-			<groupId>net.sf.proguard</groupId>
-			<artifactId>proguard-base</artifactId>
-			<version>${version.proguard-base}</version>
-		</dependency>
 	</dependencies>
 
 	<properties>
 		<java.version>1.8</java.version>
 		<skipTests>true</skipTests>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<maven.compiler.testSource>1.8</maven.compiler.testSource>
-		<maven.compiler.testTarget>1.8</maven.compiler.testTarget>
-		<java.bootstrap.classes>${java.home}/lib/rt.jar</java.bootstrap.classes>
-		<java.cryptographic.extension.classes>${java.home}/lib/jce.jar</java.cryptographic.extension.classes>
-		<java.secure.socket.extension.classes>${java.home}/lib/jsse.jar</java.secure.socket.extension.classes>
-		<version.proguard-base>5.3.3</version.proguard-base>
 	</properties>
 
 	<build>
 		<plugins>
+
+
 			<plugin>
-				<!--groupId>com.pyx4me</groupId -->
 				<groupId>com.github.wvengen</groupId>
 				<artifactId>proguard-maven-plugin</artifactId>
+				<version>2.0.10</version>
 				<executions>
 					<execution>
-						<id>proguard</id>
 						<phase>package</phase>
 						<goals>
 							<goal>proguard</goal>
@@ -79,41 +67,57 @@
 				</executions>
 				<configuration>
 					<obfuscate>true</obfuscate>
-					<injar>${project.build.finalName}.jar</injar>
-					<outjar>${project.build.finalName}.jar</outjar>
-					
+					<injar>${project.build.finalName}-jar-with-dependencies.jar</injar>
+					<outjar>${project.build.finalName}-small.jar</outjar>
+					<includedependency>true</includedependency>
+					<options>
+						<option>-keep public class com.shailesh.Application  { *; }</option>
+						<option>-ignorewarnings</option>
+						<option>-keepclassmembers class * extends java.lang.Enum { *; }</option>
+						<option>-keep class org.apache.logging.log4j.** { *; }</option>
+						<option>-keep class org.apache.log4j.** { *; }</option>
+						<option>-keepattributes *Annotation*</option>
+						<option>-keep class org.codehaus.groovy.jsr223.** { *; }</option>
+						<option>-adaptresourcefilenames</option>
+						<option>-repackageclasses</option>
+						<option>-overloadaggressively</option>
+						<option>-allowaccessmodification</option>
+					</options>
 					<libs>
-						<lib>${java.bootstrap.classes}</lib>
-						<lib>${java.cryptographic.extension.classes}</lib>
-						<lib>${java.secure.socket.extension.classes}</lib>
+						<lib>${java.home}/lib/rt.jar</lib>
+						<lib>${java.home}/lib/jce.jar</lib>
 					</libs>
-					<injarNotExistsSkip>true</injarNotExistsSkip>
-					
+					<archive>
+						<manifest>
+							<mainclass>Application</mainclass>
+							<packagename>com.shailesh</packagename>
+						</manifest>
+					</archive>
 				</configuration>
 				<dependencies>
 					<dependency>
 						<groupId>net.sf.proguard</groupId>
 						<artifactId>proguard-base</artifactId>
-						<version>5.3.3</version>
+						<version>4.10</version>
 						<scope>runtime</scope>
 					</dependency>
 				</dependencies>
 			</plugin>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>repackage</goal>
-						</goals>
-						<configuration>
-							<start-class>org.springframework.boot.loader.JarLauncher</start-class>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+
+
+			<!-- <plugin> <groupId>com.github.wvengen</groupId> <artifactId>proguard-maven-plugin</artifactId> 
+				<executions> <execution> <phase>package</phase> <goals> <goal>proguard</goal> 
+				</goals> </execution> </executions> <configuration> <proguardInclude>${basedir}/proguard.conf</proguardInclude> 
+				<obfuscate>true</obfuscate> <libs> <lib>${java.home}/lib/rt.jar</lib> <lib>${java.home}/lib/jsse.jar</lib> 
+				</libs> </configuration> </plugin> -->
+
 		</plugins>
 	</build>
+
+	<!-- <build> <plugins> <plugin> <groupId>org.springframework.boot</groupId> 
+		<artifactId>spring-boot-maven-plugin</artifactId> <configuration> <mainClass>the.package.of.Application</mainClass> 
+		</configuration> <executions> <execution> <goals> <goal>repackage</goal> 
+		</goals> </execution> </executions> </plugin> </plugins> </build> -->
+
 
 </project>

@@ -2,7 +2,7 @@ package com.shailesh.service;
 
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("proKabaddiService")
 public class ProKabaddiService {
 
 	public String greet() {

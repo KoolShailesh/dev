@@ -9,7 +9,7 @@
 	<version>1.0.0</version>
 
 
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>prokabaddi</name>
 	<url>http://maven.apache.org</url>
@@ -25,11 +25,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
-		</dependency>
+
 		<!-- tag::actuator[] -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -43,6 +39,14 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- end::tests[] -->
+
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>net.sf.proguard</groupId>
 			<artifactId>proguard-base</artifactId>
@@ -64,6 +68,7 @@
 	</properties>
 
 	<build>
+		<finalName>pro-kabaddi</finalName>
 		<plugins>
 			<plugin>
 				<!--groupId>com.pyx4me</groupId -->

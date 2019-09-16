@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,11 +15,15 @@ import com.shailesh.service.TournamentService;
 import com.shailesh.viewobjects.ScheduleVO;
 import com.shailesh.viewobjects.TeamVO;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @RequestMapping("/tournament")
+@Slf4j
 public class TournamentManager {
 
 	@Autowired
+	@Qualifier("tournamentService")
 	private TournamentService tournamentService;
 
 	public TournamentManager() {
@@ -33,6 +38,8 @@ public class TournamentManager {
 
 	@GetMapping("/getallteams")
 	public @ResponseBody Set<TeamVO> getTournamentTeams() {
+		
+		log.info("I am in getTournamentTeams  for URL getallteams ");
 
 		return tournamentService.getTournamentTeams();
 

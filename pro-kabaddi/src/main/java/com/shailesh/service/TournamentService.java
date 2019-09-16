@@ -15,15 +15,18 @@ import com.shailesh.util.Pair;
 import com.shailesh.viewobjects.ScheduleVO;
 import com.shailesh.viewobjects.TeamVO;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 
  * @author Shailesh Chandra
  *
  */
-@Service
+@Service("tournamentService")
+@Slf4j
 public class TournamentService {
 
-	private Map<String, Set<TeamVO>> localCache = new HashMap<>();
+	private Map<String, Set<TeamVO>> localCache = null;
 
 	private List<ScheduleVO> schedules = new ArrayList<>();
 
@@ -34,10 +37,15 @@ public class TournamentService {
 	}
 
 	public Set<TeamVO> getTournamentTeams() {
+		log.info("all teams from localCache {}",localCache);
 		return localCache.get("allteams");
 	}
 
 	public TournamentService() {
+		
+		 localCache = new HashMap<>();
+		
+		log.info("I am in constructor");
 		Set<TeamVO> teams = new HashSet<>();
 
 		{
@@ -95,6 +103,8 @@ public class TournamentService {
 		teams.add(team8);
 		
 		localCache.put("allteams", teams);
+		
+		log.info("localCache in consturctor {} ",localCache );
 	}
 
 	public List<ScheduleVO> getTeamsSchedule() {
